@@ -1,20 +1,25 @@
-import { Tab } from "../Tab";
-import { FormInputs } from "./../FormInputs";
-import { useEffect, useState } from "react";
+import { Tab } from '../Tab';
+import { FormInputs } from './../FormInputs';
+import { useState } from 'react';
 
-import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import { useGlobalContext } from "../AppContext";
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { useGlobalContext } from '../AppContext';
 
 const Home = () => {
   const [value, setValue] = useState(0);
   const { list, setList } = useGlobalContext();
-
+  const [inputValues, setInputValues] = useState([]);
+  console.log(inputValues);
   function deleteDay(id) {
     setValue(0);
     const newList = list.filter((item) => item.id !== id);
     setList(newList);
   }
+
+  const submitForm = (weight, rep) => {
+    console.log('hi');
+  };
 
   if (list.length > 0) {
     const { workouts, day, id } = list[value];
@@ -31,14 +36,14 @@ const Home = () => {
                 );
               })}
             </div>
-            <div className="d-grid gap-2 d-md-block mx-auto mb-5">
+            <div className="d-grid gap-2 d-md-block mx-auto mb-5 bottom">
               <Link
                 to={{
-                  pathname: "add-routine",
-                  state: "bob",
+                  pathname: 'add-routine',
+                  state: 'bob',
                 }}
                 type="button"
-                className="btn btn-primary mx-1 btn-sm"
+                className="btn btn-primary mx-1 btn-sm ms-3"
               >
                 Add Day
               </Link>
@@ -56,31 +61,43 @@ const Home = () => {
           <div className="col border-start">
             <h1 className="text-center m-3 ">Routine</h1>
             <div className="border"></div>
-            <div className=" mx-auto p-2 routine-form w-50">
+            <div className=" mx-auto p-2 routine-form w-50 content">
               <h3 className="text-center m-3">{day}</h3>
-              <form /*onSubmit={submitForm}*/>
+              <form>
                 {workouts.map((workout) => {
-                  const { exerName, sets, id } = workout;
+                  const { exerName, sets } = workout;
+                  let count = -1;
                   return (
                     <div key={exerName} className="row g-5">
-                      <h5 htmlFor={exerName} className="form-label p-3">
-                        {exerName}
-                      </h5>
+                      <h5 className=" p-3">{exerName}</h5>
                       {Array(sets)
                         .fill(0)
-                        .map(() => {
-                          return <FormInputs key={uuidv4()} />;
+                        .map((index) => {
+                          console.log(index);
+                          count++;
+
+                          return (
+                            <FormInputs
+                              exerName={exerName}
+                              count={count}
+                              key={uuidv4()}
+                              // handleOnChange={handleOnChange}
+                              inputValues={inputValues}
+                              setInputValues={setInputValues}
+                            />
+                          );
                         })}
                     </div>
                   );
                 })}
-                <div className="d-grid my-4 col-6 mx-auto">
-                  <button className="btn btn-primary" type="submit">
+                <div className="d-grid my-4 col-6 mx-auto ">
+                  <button className="btn btn-primary " type="submit">
                     Save
                   </button>
                 </div>
               </form>
             </div>
+            <div className="sticky-bottom"></div>
           </div>
         </div>
       </div>

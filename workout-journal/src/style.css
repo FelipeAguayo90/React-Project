@@ -1,5 +1,16 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  min-height: 100vh;
+}
+
 .home-page {
   height: 100vh;
+  flex: 1;
 }
 
 .routines {
@@ -9,4 +20,28 @@
 .border {
   width: 50%;
   margin: 0 auto;
+}
+
+.sticky-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  padding: 20px;
+  text-align: center;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0;
+  left: 7% !important;
+}
+
+.content {
+  flex: 1;
+}
+
+.sticky {
+  position: sticky;
+  bottom: 10px;
 }/*# sourceMappingURL=style.css.map */
